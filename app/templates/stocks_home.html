@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mizzou Stock Visualizer</title>
+    <style>
+        body {
+            background-color: #FFEDCF; /* Gold Tint 3 */
+            font-family: Arial, sans-serif;
+            color: #000000;  /* Tiger Paw Black */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #FDB719; /* Mizzou Gold */
+            padding: 20px;
+            text-align: center;
+            color: #000000;
+            font-size: 2.2rem;
+            font-weight: bold;
+            border-bottom: 5px solid #000000;
+        }
+
+        .container {
+            background-color: #FFFFFF;  
+            width: 80%;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px #333333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            color: #000000;
+        }
+
+        select, input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 1rem;
+            border: 2px solid #989898; /* Black Tint 2 */
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #FDB719; /* Mizzou Gold */
+            border: 2px solid #000000;
+            color: #000000;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        button:hover {
+            background-color: #FFD17D; /* Gold Tint 1 */
+        }
+
+        .alert {
+            background-color: #ffd5de;
+            color: #970020;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        hr {
+            border: none;
+            border-top: 3px solid #000000;
+            margin-top: 40px;
+        }
+
+        h2 {
+            color: #000000;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    Mizzou Stock Data Visualizer
+</header>
+
+<div class="container">
+
+    <form method="POST">
+
+        {% if errors %}
+            <div class="alert">
+                <ul>
+                {% for field, error in errors.items() %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <label>Stock Symbol:</label>
+        <select name="symbol">
+            {% for s in symbols %}
+                <option value="{{ s }}">{{ s }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Chart Type:</label>
+        <select name="chart_type">
+            <option value="Line">Line Chart</option>
+            <option value="Bar">Bar Chart</option>
+        </select>
+
+        <label>Time Series:</label>
+        <select name="time_series">
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+        </select>
+
+        <label>Start Date:</label>
+        <input type="date" name="start_date">
+
+        <label>End Date:</label>
+        <input type="date" name="end_date">
+
+        <button type="submit">Generate Chart</button>
+    </form>
+
+    <hr>
+
+    {% if chart_html %}
+        <h2>Chart Output:</h2>
+        {{ chart_html | safe }}
+    {% endif %}
+
+</div>
+
+</body>
+</html>
