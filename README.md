@@ -1,70 +1,69 @@
 <h1 align="center">🐯 Mizzou Stock Data Visualizer</h1>
-<p align="center"> A fully containerized Flask web application for visualizing stock market data using the Alpha Vantage API.<br> Styled using official <strong>Mizzou brand colors</strong> and deployed with Docker. </p>
-<h2>📌 <u>Project Overview</u></h2>
+<p align="center">
+A fully containerized Flask web application for visualizing stock market data using the Alpha Vantage API.<br>
+Styled using official <strong>Mizzou brand colors</strong> and deployed with Docker.
+</p>
 
-The Mizzou Stock Data Visualizer is a web-based application that allows users to:
+---
 
-Select a stock symbol from a dynamically loaded S&P 500 dropdown.
+## 📌 Project Overview
 
-Choose chart types (Line or Bar).
+The **Mizzou Stock Data Visualizer** is a Flask-based web application that allows users to:
 
-Choose time series options (Daily, Weekly, Monthly).
+- Select a stock symbol from a dynamically loaded **S&P 500 dropdown**
+- Choose chart types (**Line** or **Bar**)
+- Choose time series (**Daily**, **Weekly**, **Monthly**)
+- Select **start and end dates**
+- Automatically fetch stock data using the **Alpha Vantage API**
+- View clean, interactive charts built with **Plotly**
+- Run the entire application inside **Docker** for portability and consistency
 
-Select start and end dates for analysis.
+This project was created for **Project 3A**, converting a Python CLI stock tool into a fully interactive Flask web app.
 
-Automatically fetch stock data from the Alpha Vantage API.
+---
 
-Display clean interactive charts generated with Plotly.
+## 🏗️ Technologies Used
 
-Run the entire application inside a Docker container for portability and consistency.
+- Python 3.11  
+- Flask  
+- Plotly  
+- Pandas  
+- Requests  
+- Docker & Docker Compose  
+- HTML / CSS  
+- Alpha Vantage API  
+- Mizzou Color Branding  
 
-This project was built for Project 3A as part of the course requirement to convert a Python CLI tool into a fully interactive web app using Flask and Docker.
+---
 
-<h2>🏗️ <u>Technologies Used</u></h2>
+## 🎨 Mizzou Theme Implementation
 
-Python 3.11
+The application uses the official **University of Missouri brand colors**.
 
-Flask
+### **Primary Colors**
+- **Tiger Paw Black** — `#000000`  
+- **Mizzou Gold** — `#FDB719`
 
-Plotly
+### **Neutral Colors**
+- Black Tints 1–3 (grayscale)
 
-Pandas
+### **Accent Colors**
+- Gold Tint 1–3  
+- Alert colors for form errors & warnings  
 
-Requests
+Branding is implemented in a custom stylesheet:
 
-Docker & Docker Compose
+```
+/app/static/mizzou.css
+```
 
-HTML / CSS
+This ensures the UI remains clean, professional, and compliant with Mizzou branding guidelines.
 
-Alpha Vantage API
+---
 
-Mizzou Color Branding
+## 📂 Project Structure
 
-<h2>🎨 <u>Mizzou Theme Implementation</u></h2>
-
-The application uses official University of Missouri (Mizzou) brand colors:
-
-Primary Colors
-
-Tiger Paw Black — #000000
-
-Mizzou Gold — #FDB719
-
-Neutral Colors
-
-Black Tints 1–3 (Gray scale)
-
-Accent Colors
-
-Gold Tint 1–3
-
-Alert colors for errors and warnings
-
-Branding is applied through a custom mizzou.css file placed in /app/static/.
-
-This ensures the application looks professionally themed, consistent, and compliant with Mizzou brand guidelines.
-
-<h2>📂 <u>Project Structure</u></h2>
+```
 Project3a/
 │
 ├── app/
@@ -82,101 +81,108 @@ Project3a/
 ├── stock_visualizer/
 │   └── visualizer.py
 │
-├── .env                # Contains ALPHA_VANTAGE_API_KEY (not tracked in Git)
+├── .env                # Alpha Vantage API key (not committed)
 ├── .gitignore
 ├── Dockerfile
 ├── docker-compose.yml
 ├── requirements.txt
 ├── run.py
 └── README.md
+```
 
-<h2>⚙️ <u>Installation & Setup</u></h2>
-<h3>1️⃣ Clone the Repository</h3>
+---
+
+## ⚙️ Installation & Setup
+
+### **1️⃣ Clone the Repository**
+
+```bash
 git clone https://github.com/AlexanderCoker/StockDataVisualizer.git
 cd StockDataVisualizer
+```
 
-<h3>2️⃣ Create a Local <code>.env</code> File</h3>
+---
 
-Create .env in the project root:
+### **2️⃣ Create a Local `.env` File**
 
+Add the following to a new `.env` file in the project root:
+
+```env
 ALPHA_VANTAGE_API_KEY=your_api_key_here
+```
 
+This file is ignored by Git and passed securely into Docker.
 
-This file is ignored by Git and securely passed into Docker.
+---
 
-<h3>3️⃣ Build & Run with Docker</h3>
+### **3️⃣ Build & Run with Docker**
+
+```bash
 docker compose up --build
+```
 
+Then open your browser to:
 
-Then open:
-
+```
 http://localhost:5000
+```
 
-<h2>🧪 <u>Form Features & Validation</u></h2>
+---
+
+## 🧪 Form Features & Validation
 
 The application includes:
 
-✔ Dynamic S&P 500 symbol dropdown
+### ✔ Dynamic S&P 500 Symbol Dropdown
+Loaded from `stocks.csv` via `load_symbols.py`.
 
-Loaded from stocks.csv using load_symbols.py.
+### ✔ Input Validation
+- Invalid symbol  
+- Invalid chart type  
+- Invalid time series  
+- Empty date fields  
+- End date before start date  
 
-✔ Input Validation
+### ✔ Interactive Plotly Chart
+Displayed directly below the form after submission.
 
-Invalid symbol
+---
 
-Invalid chart type
+## 🐋 Docker Configuration
 
-Invalid time series
+### **Dockerfile**
+A lightweight `python:3.11-slim` image that:
 
-Empty date fields
+- Installs dependencies  
+- Copies project files  
+- Exposes port 5000  
+- Runs Flask via **Gunicorn** in production mode  
 
-End date before start date
+### **docker-compose.yml**
+- Loads `.env` environment variables  
+- Maps port **5000:5000**  
+- Builds and runs the container  
 
-✔ Interactive Plotly Chart
+---
 
-Rendered directly below the form.
+## 📜 Usage
 
-<h2>🐋 <u>Docker Configuration</u></h2>
-Dockerfile
+1. Select a stock symbol  
+2. Choose chart type  
+3. Choose time series  
+4. Select start & end dates  
+5. Click **Generate Chart**  
+6. View the interactive Plotly chart  
 
-A lightweight Python 3.11-slim image that:
+---
 
-Installs dependencies
+## 🤝 Credits
 
-Copies project files
+**Developer:** Alexander Coker  
+**Project:** Project 3A – Mizzou Stock Data Visualizer  
+**Course:** IT 4320 – Advanced Application Development  
 
-Exposes port 5000
+---
 
-Runs Flask via Gunicorn in production mode
-
-docker-compose.yml
-
-Loads environment variables from .env
-
-Maps port 5000:5000
-
-Builds the container
-
-<h2>📜 <u>Usage</u></h2>
-
-Select a stock symbol
-
-Choose chart type
-
-Choose time series
-
-Select start & end dates
-
-Click Generate Chart
-
-View the interactive chart immediately below the form
-
-<h2>🤝 <u>Credits</u></h2>
-
-Developer: Alexander Coker
-Project: Project 3A – Mizzou Stock Data Visualizer
-Course: IT 4320 – Advanced Application Development
-
-<h3>⚠️ Note</h3>
-
-<em>This README was generated with the assistance of ChatGPT.</em>
+### ⚠️ Note
+*This README was generated with assistance from ChatGPT.*
