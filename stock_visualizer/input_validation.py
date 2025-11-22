@@ -1,4 +1,3 @@
-# stock_visualizer/input_validation.py
 import re
 from datetime import datetime
 
